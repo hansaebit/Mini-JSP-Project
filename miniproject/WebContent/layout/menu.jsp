@@ -77,7 +77,7 @@
 			<a href="<%=url %>/index.jsp">Home</a>
 		</li>
 		<li menu="menu2">
-			<a href="<%=url %>/index.jsp?main=member/memberform.jsp">회원가입</a>
+			<a href="<%=url %>/index.jsp?main=member/memberlist.jsp">회원목록</a>
 		</li>
 		<li menu="menu3">
 			<a href="<%=url %>/index.jsp?main=guest/guestlist.jsp">방명록</a>
