@@ -85,6 +85,9 @@
 		<li menu="menu4">
 			<a href="<%=url %>/index.jsp?main=board/boardlist.jsp">게시판</a>
 		</li>
+		<li menu="menu5">
+			<a href="<%=url %>/index.jsp?main=money/moneylist.jsp">금전출납부</a>
+		</li>
 	</ul>
 <!-- 출력을 무조건 index로...(메인자리에 멤버리스트,게스트,보드 등 나오게 하려고 index.jsp?main=를 씀!)
 	getParameter("main")을 하면 경로를 얻을 수 있음! Home은 null, 메인페이지로 가게 설정함. -->
