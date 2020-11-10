@@ -52,16 +52,18 @@ public class MoneyDao {
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
-			MoneyDto dto = new MoneyDto();
+			
 			rs=pstmt.executeQuery();
 			
+			while(rs.next()) {		
+			MoneyDto dto = new MoneyDto();
 			dto.setNum(rs.getString("num"));
 			dto.setPummok(rs.getString("pummok"));
 			dto.setPrice(rs.getString("price"));
 			dto.setDay(rs.getString("day"));
 			
 			list.add(dto);
-			
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,6 +73,38 @@ public class MoneyDao {
 		
 		return list;
 	}//data list end !!
+	
+	//date update find
+	public MoneyDto findMoney(String num) {
+		MoneyDto dto = new MoneyDto();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="select * from daymoney where num=?";
+		conn=db.getMyConnection();
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				
+				dto.setDay(rs.getString("day"));
+				dto.setNum(rs.getString("num"));
+				dto.setPrice(rs.getString("price"));
+				dto.setPummok(rs.getString("pummok"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			db.dbClose(conn, pstmt);
+			
+		}
+		return dto;
+	} // update
 	
 	
 	public void updateMoney(MoneyDto dto) {
@@ -119,6 +153,36 @@ public class MoneyDao {
 		}
 	} // update
 	
+	
+	public String allMoney() {
+		String a="";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		String sql="select sum(price) sum from daymoney";
+		
+		conn=db.getMyConnection();
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				a = rs.getString("sum");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+			db.dbClose(null, pstmt, rs);
+			
+		}
+		return a;
+		
+	}
 	
 	
 

@@ -5,6 +5,8 @@ public class MoneyDto {
 	private String pummok;
 	private String price;
 	private String day;
+	
+	
 	public String getNum() {
 		return num;
 	}

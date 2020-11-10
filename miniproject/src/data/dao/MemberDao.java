@@ -17,7 +17,7 @@ public class MemberDao {
 	DbConnect db=new DbConnect();
 	
 	//아이디가 있으면 true, 없으면 false
-	public boolean isIdSerarch(String id){
+	public boolean isIdSearch(String id){
 		boolean find=false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -250,6 +250,79 @@ public class MemberDao {
 			}
 			
 			return find;
+		}
+		
+		//삭제하는 메서드
+		public void deleteMemger(String id) {
+			Connection conn=null;
+			PreparedStatement pstmt=null;
+			
+			String sql="delete from member where id=?";
+			
+			conn=db.getMyConnection();
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				pstmt.execute();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				db.dbClose(conn, pstmt);
+			}
+			
+		}
+		
+		//로그인시 필요한 메서드
+		public int loginProcess(String id, String pass) {
+			int ans=0;
+			if(this.isIdSearch(id)) {
+				//아이디가 존재하는 경우
+				//비번이 맞는지 체크하기
+				if(this.isIdPassCheck(id, pass)) {
+					ans=3;
+				}else {
+					ans=2;
+				}
+				
+			}else {//아이디가 아예 존재하지 안흔ㄴ 경우
+				ans=1;
+			}
+			return ans;
+		}
+		
+		//아이디로 이름 찾기
+		public String getName(String id){
+			String name="";
+			Connection conn=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs = null;
+			String sql="select name from member where id=?";
+			
+			conn=db.getMyConnection();
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					name = rs.getString("name");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+				db.dbClose(conn, pstmt, rs);
+				
+			}
+			
+			return name;
 		}
 	
 }

@@ -42,7 +42,7 @@
 	div.layout div.info{
 		position: absolute;
 		left: 20px;
-		top: 400px;
+		top: 600px;
 		width: 140px;
 		height: 200px;
 		border: 2px solid gray;
@@ -62,8 +62,8 @@
 		position: absolute;
 		left: 20px;
 		top: 160px;
-		width: 160px;
-		height: 150px;
+		width: 200px;
+		/* height: 200px; */
 		border: 2px solid gray;
 		border-radius: 30px;
 		font-size: 20px;

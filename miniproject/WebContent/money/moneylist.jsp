@@ -1,3 +1,4 @@
+<%@page import="java.text.NumberFormat"%>
 <%@page import="data.dto.MoneyDto"%>
 <%@page import="java.util.List"%>
 <%@page import="data.dao.MoneyDao"%>
@@ -11,29 +12,37 @@
 </head>
 <body>
 
-<button type=button id="btnadd">추가</button>
-<button type=button id="btnupdate">수정</button>
+<button type=button id="btnadd" onclick="location.href='index.jsp?main=money/moneyform.jsp'">추가</button>
 
 
 <%
 	MoneyDao dao = new MoneyDao();
-
+	String sum = dao.allMoney();
 	List<MoneyDto> list = dao.moneylist();
 	
-	
+	%>
+	<table class="table table-bordered" style="width:500px;">
+		<tr>
+			<td>Num</td><td>pummok</td><td>price</td><td>day</td><td>비고</td>
+		</tr>
+	<%
+	for(MoneyDto dto:list){
+		%>	
+				<tr>
+					<td><%=dto.getNum() %></td><td><%=dto.getPummok() %></td><td><%=dto.getPrice()%></td><td><%=dto.getDay() %></td>
+					<td>
+					<button type="button" value="<%=dto.getNum()%>" onclick="location.href='index.jsp?main=money/moneyupdateform.jsp?num=<%=dto.getNum() %>'">수정</button>
+					<button type="button" value="<%=dto.getNum()%>" onclick="location.href='index.jsp?main=money/moneydelete.jsp?num=<%=dto.getNum() %>'">삭제</button>
+					</td>
+				</tr>
+			
+		
+		<%
+	}
 	
 %>
-
+<tr><td colspan='5' style='text-align:right;'>총 금액은 <%=sum %>원 입니다.</td></tr>
+</table>
 
 </body>
-<script type="text/javascript">
-$(document).on('click','#btnadd',function(){
-	window.open("money/moneyform.jsp","","left=100px,top=100px,width=400px,height=250px");
-	
-});
-$(document).on('click','#btnupdate',function(){
-	window.open("money/moneyupdateform.jsp","","left=100px,top=100px,width=400px,height=250px");
-	
-});
-</script>
 </html>

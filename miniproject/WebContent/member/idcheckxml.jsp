@@ -10,7 +10,7 @@
 	//dao 선언
 	MemberDao dao = new MemberDao();
 	//메서드 호출
-	boolean find=dao.isIdSerarch(id);
+	boolean find=dao.isIdSearch(id);
 
 %>
 <data><%=find?"yes":"no"%></data>
