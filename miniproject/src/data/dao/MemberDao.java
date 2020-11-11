@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
+import data.dto.GuestDto;
 import data.dto.MemberDto;
 import data.dto.MemberDto2;
 import data.dto.ZipcodeDto;
@@ -324,5 +325,7 @@ public class MemberDao {
 			
 			return name;
 		}
+		
+
 	
 }

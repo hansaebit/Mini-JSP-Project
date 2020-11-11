@@ -16,7 +16,8 @@
         multi=new MultipartRequest(request,realPath,uploadSize,"utf-8",new DefaultFileRenamePolicy());
         //입력한 데이터 읽기
         
-        String myid=multi.getParameter("myid");
+  		String num=multi.getParameter("num");
+        String pageN=multi.getParameter("pageN");
         //업로드한 이미지인데 안할경우 null
         String photo=multi.getFilesystemName("photo");
         System.out.println("photo="+photo);
@@ -24,17 +25,17 @@
         
         //dto에 넣기
         GuestDto dto=new GuestDto();
-        dto.setMyid(myid);
-        dto.setPhoto(photo==null?"no":photo);
+        dto.setNum(num);
+        dto.setPhoto(photo);
         dto.setContent(content);
         
         //dao 선언
         GuestDao dao = new GuestDao();
         
         //메서드 호출
-        dao.insertGuest(dto);
+        dao.updateGuest(dto);
         //방명록 페이지로 이동
-        response.sendRedirect("../index.jsp?main=guest/guestlist.jsp");
+        response.sendRedirect("../index.jsp?main=guest/guestlist.jsp?pageNum="+pageN);
         
     }catch(Exception e){
         System.out.println("업로드 오류 : "+e.getMessage());

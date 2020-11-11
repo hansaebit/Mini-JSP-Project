@@ -1,3 +1,5 @@
+<%@page import="data.dao.GuestDao"%>
+<%@page import="data.dto.GuestDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -46,14 +48,36 @@ function readUrl(input){
     String id = (String) session.getAttribute("myid");
     //로그인한 상태인제 세션을 얻는다.
     String loginok = (String) session.getAttribute("loginok");
+    
+    GuestDto dto = new GuestDto();
+    String num=request.getParameter("num");
+    String pageN=request.getParameter("pageNum");
+    GuestDao dao = new GuestDao();
+    
+    dto = dao.getData(num);
+    
+    
     if (loginok != null) {
     %>
     <!-- 이미지 출력할 곳 -->
-    <img id="showimg">
     
-    <form action="guest/guestaction.jsp" method="post" enctype="multipart/form-data">
+    <%
+    	if(dto.getPhoto().equals("no")){
+    		%>
+    		<img id="showimg">
+    		<%
+    	}else{%>
+    		<img id="showimg" src="save/<%=dto.getPhoto()%>">
+    		
+    	<%}
+    %>
+    
+    
+    <form action="guest/updateaction.jsp" method="post" enctype="multipart/form-data">
         <!-- hidden -->
-        <input type="hidden" name="myid" value="<%=id%>">
+        
+        <input type="hidden" name="num" value="<%=num %>">
+        <input type="hidden" name="pageN" value="<%=pageN %>">
 
         <table class="table table-bordered" style="width: 500px">
             <caption>
@@ -63,16 +87,22 @@ function readUrl(input){
             </caption>
             <tr height="150">
                 <td>
-                    <b>사진을 선택해주세요(1개만 가능)</b>
+                    <b>사진은 수정시에만 다시 선택해주세요.</b>
                     <span class="camera glyphicon glyphicon-camera"></span>
                     <input type="file" name="photo" id="photo"
                     style="display:none;"
                     onchange="readUrl(this)"> <!-- 자리 안차지하구 안보이게 -->
                     <br>
-                    <textarea name="content" style="width:400px;height:100px;" required="required"></textarea>
+                    <textarea name="content" style="width:400px;height:100px;" required="required"><%=dto.getContent() %></textarea>
                     <button type="submit" class="btn btn-default" style="float: right;width:80px;height:100px;">저장</button>
                 </td>
             
+            </tr>
+            <tr>
+            	<td align="center">
+            		<button type="button" class="btn btn-info"
+            		onclick="history.back()"> 목록으로 돌아가기</button>
+            	</td>
             </tr>
 
         </table>
