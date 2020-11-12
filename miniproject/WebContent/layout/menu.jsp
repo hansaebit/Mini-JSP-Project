@@ -79,13 +79,29 @@
 		<li menu="menu2">
 			<a href="<%=url %>/index.jsp?main=member/memberlist.jsp">회원목록</a>
 		</li>
+		<%
+		String logid=(String)session.getAttribute("myid");
+		String loginok=(String)session.getAttribute("loginok");
+		if(logid=="admin"&&loginok!=null){
+		%>
 		<li menu="menu3">
+			<a href="<%=url %>/index.jsp?main=shop/addform.jsp">상품등록</a>
+		</li>
+		<%}else{%>
+		<li menu="menu3">
+			<a href="<%=url %>/index.jsp?main=shop/shoplist.jsp">상품목록</a>
+		</li>
+		<%}%>
+		
+		
+		
+		<li menu="menu4">
 			<a href="<%=url %>/index.jsp?main=guest/guestlist.jsp">방명록</a>
 		</li>
-		<li menu="menu4">
+		<li menu="menu5">
 			<a href="<%=url %>/index.jsp?main=board/boardlist.jsp">게시판</a>
 		</li>
-		<li menu="menu5">
+		<li menu="menu6">
 			<a href="<%=url %>/index.jsp?main=money/moneylist.jsp">금전출납부</a>
 		</li>
 	</ul>
