@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class CartDto {
 	private String idx;
 	private String shopnum;
-	private String sum;
+	private String num;
 	private String mycolor;
 	private int cnt;
 	private Timestamp cartday;
@@ -22,11 +22,11 @@ public class CartDto {
 	public void setShopnum(String shopnum) {
 		this.shopnum = shopnum;
 	}
-	public String getSum() {
-		return sum;
+	public String getNum() {
+		return num;
 	}
-	public void setSum(String sum) {
-		this.sum = sum;
+	public void setNum(String num) {
+		this.num = num;
 	}
 	public String getMycolor() {
 		return mycolor;
@@ -45,6 +45,5 @@ public class CartDto {
 	}
 	public void setCartday(Timestamp cartday) {
 		this.cartday = cartday;
-	}
-	
+	}	
 }

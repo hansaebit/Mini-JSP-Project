@@ -124,7 +124,7 @@ $("span.selcol").click(function(){
 	if(s==""){
 		s+=$(this).css('color')
 	}else{
-		s+=","+$(this).css('color')
+		s+=":"+$(this).css('color')
 	}
 	$("input.coltext").val(s);
 	$(this).remove();

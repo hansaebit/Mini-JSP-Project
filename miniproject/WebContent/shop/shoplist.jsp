@@ -34,7 +34,22 @@
     $( "#tabs" ).tabs();
   } );
   </script>
-  
+    <script>
+  $( function() {
+    $( "#tabs" ).tabs();
+    
+    //각 상품 클릭시 발생하는 이벤트 추가
+    $("a.godetail").click(function(e){
+    	e.preventDefault();//기본 이벤트 무효화
+    	
+    	//태그에 넣어둔 shopnum 가져오기
+    	var shopnum=$(this).attr("shopnum");
+    	//alert(shopnum);
+    	//디테일 페이지로 이동하기
+    	location.href="index.jsp?main=shop/detailpage.jsp?shopnum="+shopnum;
+    });
+  } );
+  </script>
 </head>
 <%
 	ShopDao dao=new ShopDao();
@@ -70,7 +85,7 @@
     				double saleprice=dto.getPrice()*saleper;
     			%>
     				<td>
-    					<a shopnum="<%=dto.getSangpum() %>" style="cursor:pointer;" class="godetail">
+    					<a shopnum="<%=dto.getShopnum()%>" style="cursor:pointer;" class="godetail">
     						<img src="shopsave/<%=photo %>" class="photo">
     						<br>
     						<%=dto.getSangpum()%>
@@ -96,19 +111,214 @@
 		</p>
 	</div>
 	<div id="tabs-2">
-    	<p>아우터</p>
+    	<p>
+    		<table class="table table-bordered" style="width:700px;">
+    			<caption><b>아우터</b></caption>
+    			<tr>
+    			<%
+    			i=0;
+    			for(ShopDto dto:list){
+    				if(dto.getCategory().equals("아우터")){
+    				//첫번째 사진
+    				String photo=dto.getPhoto().split(",")[0];
+    				//20~50까지 난수 발생
+    				int sale=(int)(Math.random()*31)+20;
+    				double saleper=1-(double)sale/100;
+    				double saleprice=dto.getPrice()*saleper;
+    			%>
+    				<td>
+    					<a shopnum="<%=dto.getShopnum() %>" style="cursor:pointer;" class="godetail">
+    						<img src="shopsave/<%=photo %>" class="photo">
+    						<br>
+    						<%=dto.getSangpum()%>
+    						<br>
+    						<b style='color:red; font-size:1.7em;'><%=sale %>%</b>
+    						<span style="float:right;">
+    							<div style="color:gray;">
+    								<del><%=nf.format(dto.getPrice())%></del><br>
+    							</div>
+    							<b><%=nf.format(saleprice)%></b>
+    						</span>
+    					</a>
+    				</td>
+    				<%
+    				if((i+1)%4==0){%>
+    					</tr>
+    					<tr>
+    				<%}
+    				i++;
+    			}}
+    			%>
+    		</table>
+		</p>
 	</div>
 	<div id="tabs-3">
-  	    <p>상의</p>
+  	    <p>
+    		<table class="table table-bordered" style="width:700px;">
+    			<caption><b>상의</b></caption>
+    			<tr>
+    			<%
+    			i=0;
+    			for(ShopDto dto:list){
+    				if(dto.getCategory().equals("상의")){
+    				//첫번째 사진
+    				String photo=dto.getPhoto().split(",")[0];
+    				//20~50까지 난수 발생
+    				int sale=(int)(Math.random()*31)+20;
+    				double saleper=1-(double)sale/100;
+    				double saleprice=dto.getPrice()*saleper;
+    			%>
+    				<td>
+    					<a shopnum="<%=dto.getShopnum() %>" style="cursor:pointer;" class="godetail">
+    						<img src="shopsave/<%=photo %>" class="photo">
+    						<br>
+    						<%=dto.getSangpum()%>
+    						<br>
+    						<b style='color:red; font-size:1.7em;'><%=sale %>%</b>
+    						<span style="float:right;">
+    							<div style="color:gray;">
+    								<del><%=nf.format(dto.getPrice())%></del><br>
+    							</div>
+    							<b><%=nf.format(saleprice)%></b>
+    						</span>
+    					</a>
+    				</td>
+    				<%
+    				if((i+1)%4==0){%>
+    					</tr>
+    					<tr>
+    				<%}
+    				i++;
+    			}}
+    			%>
+    		</table>
+		</p>
 	</div>
 	<div id="tabs-4">
-    	<p>하의</p>
+    	<p>
+    		<table class="table table-bordered" style="width:700px;">
+    			<caption><b>하의</b></caption>
+    			<tr>
+    			<%
+    			i=0;
+    			for(ShopDto dto:list){
+    				if(dto.getCategory().equals("하의")){
+    				//첫번째 사진
+    				String photo=dto.getPhoto().split(",")[0];
+    				//20~50까지 난수 발생
+    				int sale=(int)(Math.random()*31)+20;
+    				double saleper=1-(double)sale/100;
+    				double saleprice=dto.getPrice()*saleper;
+    			%>
+    				<td>
+    					<a shopnum="<%=dto.getShopnum() %>" style="cursor:pointer;" class="godetail">
+    						<img src="shopsave/<%=photo %>" class="photo">
+    						<br>
+    						<%=dto.getSangpum()%>
+    						<br>
+    						<b style='color:red; font-size:1.7em;'><%=sale %>%</b>
+    						<span style="float:right;">
+    							<div style="color:gray;">
+    								<del><%=nf.format(dto.getPrice())%></del><br>
+    							</div>
+    							<b><%=nf.format(saleprice)%></b>
+    						</span>
+    					</a>
+    				</td>
+    				<%
+    				if((i+1)%4==0){%>
+    					</tr>
+    					<tr>
+    				<%}
+    				i++;
+    			}}
+    			%>
+    		</table>
+		</p>
 	</div>
 	<div id="tabs-5">
-    	<p>세트</p>
+    	<p>
+    		<table class="table table-bordered" style="width:700px;">
+    			<caption><b>세트</b></caption>
+    			<tr>
+    			<%
+    			i=0;
+    			for(ShopDto dto:list){
+    				if(dto.getCategory().equals("세트")){
+    				//첫번째 사진
+    				String photo=dto.getPhoto().split(",")[0];
+    				//20~50까지 난수 발생
+    				int sale=(int)(Math.random()*31)+20;
+    				double saleper=1-(double)sale/100;
+    				double saleprice=dto.getPrice()*saleper;
+    			%>
+    				<td>
+    					<a shopnum="<%=dto.getShopnum() %>" style="cursor:pointer;" class="godetail">
+    						<img src="shopsave/<%=photo %>" class="photo">
+    						<br>
+    						<%=dto.getSangpum()%>
+    						<br>
+    						<b style='color:red; font-size:1.7em;'><%=sale %>%</b>
+    						<span style="float:right;">
+    							<div style="color:gray;">
+    								<del><%=nf.format(dto.getPrice())%></del><br>
+    							</div>
+    							<b><%=nf.format(saleprice)%></b>
+    						</span>
+    					</a>
+    				</td>
+    				<%
+    				if((i+1)%4==0){%>
+    					</tr>
+    					<tr>
+    				<%}
+    				i++;
+    			}}
+    			%>
+    		</table>
+		</p>
 	</div>
 	<div id="tabs-6">
-    	<p>악세서리</p>
+    	<p>
+    		<table class="table table-bordered" style="width:700px;">
+    			<caption><b>악세서리</b></caption>
+    			<tr>
+    			<%
+    			i=0;
+    			for(ShopDto dto:list){
+    				if(dto.getCategory().equals("악세서리")){
+    				//첫번째 사진
+    				String photo=dto.getPhoto().split(",")[0];
+    				//20~50까지 난수 발생
+    				int sale=(int)(Math.random()*31)+20;
+    				double saleper=1-(double)sale/100;
+    				double saleprice=dto.getPrice()*saleper;
+    			%>
+    				<td>
+    					<a shopnum="<%=dto.getShopnum() %>" style="cursor:pointer;" class="godetail">
+    						<img src="shopsave/<%=photo %>" class="photo">
+    						<br>
+    						<%=dto.getSangpum()%>
+    						<br>
+    						<b style='color:red; font-size:1.7em;'><%=sale %>%</b>
+    						<span style="float:right;">
+    							<div style="color:gray;">
+    								<del><%=nf.format(dto.getPrice())%></del><br>
+    							</div>
+    							<b><%=nf.format(saleprice)%></b>
+    						</span>
+    					</a>
+    				</td>
+    				<%
+    				if((i+1)%4==0){%>
+    					</tr>
+    					<tr>
+    				<%}
+    				i++;
+    			}}
+    			%>
+    		</table>
+		</p>
 	</div>
 </div>
  

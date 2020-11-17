@@ -71,6 +71,8 @@
 		font-family: Jua;
 	}
 </style>
+
+
 </head>
 <%
 	//메인페이지에 들어갈 파일 읽기
@@ -84,23 +86,38 @@
 	<%}
 %>
 <body>
-<div class="layout">
-	<div class="login">
-		<jsp:include page="login/loginmain.jsp"/>
-	</div>
-	<div class="title">
-		<jsp:include page="layout/title.jsp"/>
-	</div>
-	<div class="menu">
-		<jsp:include page="layout/menu.jsp"/>
-	</div>
-	<div class="main">
-		<jsp:include page="<%=mainPage %>"/>
-	</div>
-	<div class="info">
-		<jsp:include page="layout/info.jsp"/>
-	</div>
+	<div class="layout">
+	
+	
+		<div class="title">
+			<jsp:include page="layout/title.jsp"/>
+		</div>
+		
+		<div class="menu">
+			<jsp:include page="layout/menu.jsp"/>
+		</div>
+		
+		
+
+		<div class="container">
+			<div class="incontainer">
+				<div class="login ">
+					<jsp:include page="login/loginmain.jsp"/>
+				</div>
+				
+				<div class="info">
+					<jsp:include page="layout/info.jsp"/>
+				</div>
+			</div>
+			<div class="main ">
+				<jsp:include page="<%=mainPage %>"/>
+			</div>
+		</div>
+
+
 </div>
+
+	
 </body>
 
 </html>
