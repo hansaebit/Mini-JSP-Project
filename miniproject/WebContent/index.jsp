@@ -24,6 +24,8 @@
 		color: gray;
 		cursor: pointer;
 	}
+	
+	
 	div.layout div.title{
 		height: 130px;
 		line-height: 130px;
@@ -40,10 +42,7 @@
 	}
 	
 	div.layout div.info{
-		position: absolute;
-		left: 20px;
-		top: 600px;
-		width: 140px;
+		width: 200px;
 		height: 200px;
 		border: 2px solid gray;
 		border-radius: 30px;
@@ -52,16 +51,30 @@
 		font-family: Jua;
 	}
 	
+	.container{
+		width:1600px;
+		margin:60px auto;
+		display:flex;
+		justify-content: space-between;
+		
+	}
+	
+	div.layout .incontainer{
+		float:left;
+		flex-basis: 300px;
+	}
+	
 	div.layout div.main{
-		position: absolute;
-		left: 300px;
-		top: 300px;
+		flex-basis: 1500px;
+		float:left;
+	}
+	
+	div.layout div.nav{
+		float:left;
+		flex-basis: 360px;
 	}
 	
 	div.layout div.login{
-		position: absolute;
-		left: 20px;
-		top: 160px;
 		width: 200px;
 		/* height: 200px; */
 		border: 2px solid gray;
@@ -69,6 +82,8 @@
 		font-size: 20px;
 		padding: 20px;
 		font-family: Jua;
+		margin-right: 60px;
+		margin-bottom: 400px;
 	}
 </style>
 
@@ -111,6 +126,8 @@
 			</div>
 			<div class="main ">
 				<jsp:include page="<%=mainPage %>"/>
+			</div>
+			<div class='nav'>
 			</div>
 		</div>
 

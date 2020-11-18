@@ -10,7 +10,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <style type="text/css">
+	#wrap{
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+	}
+
 	img.large{
 		width: 470px;
 		height: 570px;
@@ -44,16 +52,21 @@
 		border: 1px solid black;
 		margin-left: 100px;
 	}	
+	#frm{
+		margin:0 auto;
+	}
 	
 	div#answer{
-		margin-left:150px;
-		margin-top:30px;
-		margin-bottom:30px;
+		margin:30px auto;
+	}
+	
+	div#answerlist{
+		margin:30px auto;
 	}
 	
 	#content{
-		width:300px;
-		height:50px;
+		width:600px;
+		height:100px;
 		float:left;
 	}
 	
@@ -65,14 +78,36 @@
 	}
 	
 	.answeradd textarea{
-		margin-left:150px;
-		width:300px;
-		height:50px;
+		margin-left:40px;
+		width:700px;
+		height:100px;
+		float:left;
+	}
+	
+	.writeanswer{
+		margin-left:340px;
+		margin-top:10px;
 		float:left;
 	}
 	
 	span.delanswer{
 		cursor:pointer;
+	}
+	
+	table.answertable{
+		font-family: Single day;
+		font-size:1.3em;
+		border-collapse: collapse;
+ 		border-radius: 1em;
+ 		overflow: hidden;
+	}
+	table.answertable thead{
+		text-align: center;
+		padding: 10px;
+    	font-weight: bold;
+	    vertical-align: top;
+   		color: #369;
+  	 	border-bottom: 3px solid #036;
 	}
 	
 </style>
@@ -134,19 +169,24 @@ $(function(){
 	$(document).on('click','.writeanswer',function(){
 		var idx=$(this).val();
 		var answer=$(".writearea").val();
+		if(answer.length==0){
+			alert("답글을 입력 후 저장해주세요");
+			return;
+		}else{
+			$.ajax({
+				data:"post",
+				dataType:"html",
+				data:{"idx":idx,"answer":answer},
+				url:"shop/updateanswer.jsp",
+				success:function(data){
+					alert("작성이 완료되었습니다.");
+					answerlist();
+					$(".writearea").val("");
+					
+				}
+			});
+		}
 		
-		$.ajax({
-			data:"post",
-			dataType:"html",
-			data:{"idx":idx,"answer":answer},
-			url:"shop/updateanswer.jsp",
-			success:function(data){
-				alert("작성이 완료되었습니다.");
-				answerlist();
-				$(".writearea").val("");
-				
-			}
-		});
 	});
 		
 	
@@ -170,6 +210,7 @@ $(function(){
 //사용자 함수 추가
 function answerlist(){
 	//alert($("#shopnum").val());
+	var loginid=$("#myid").val();
 	var shopnum=$("#shopnum").val();
 	$.ajax({
 		data:"post",
@@ -181,15 +222,27 @@ function answerlist(){
 			var s="";
 			$(data).find("answer").each(function(key,value){
 				var a=$(value);
-				s+="<table class='table table-bordered'><tr><td>작성자</td><td>"+a.find("name").text()+"</td><td>작성일</td><td>"+a.find("writeday").text();
-				s+="&nbsp;&nbsp;&nbsp;&nbsp;<span class='delanswer glyphicon glyphicon-trash' value='"+a.find('idx').text()+"' ></span></td></tr>";
-				if(a.find("shopanswer").text()=="no"){
-					s+="<tr><td colspan='4'>"+a.find("content").text()+"</td></tr>";
-					s+="<tr><td colspan='4'><button type='button' class='addanswer'>답변달기</button>";
-					s+="<div class=answeradd style='display:none'><textarea class='writearea'></textarea>";
-					s+="<button type='button' value='"+a.find('idx').text()+"' class='btn btn-warning writeanswer'>작성</button></div></td></tr></table>";
+				s+="<table class='table table-bordered answertable' style='width:800px'><thead><tr class='info'><td>작성자</td><td>"+a.find("name").text()+"</td><td>작성일</td><td width='250px'>"+a.find("writeday").text();
+				
+				var myid=a.find("myid").text();
+				if(loginid==myid){
+					s+="&nbsp;&nbsp;&nbsp;&nbsp;<span class='delanswer glyphicon glyphicon-trash' value='"+a.find('idx').text()+"' ></span></td></tr></thead>";		
 				}else{
-					s+="<tr><td colspan='3'>"+a.find("content").text()+"</td><td>[샵주인]<br>"+a.find("shopanswer").text()+"</td>";
+					s+="</td></tr></thead>";
+				}
+				var qcontent=a.find("content").text();
+				qcontent = qcontent.replace(/(?:\r\n|\r|\n)/g, '<br />');
+				s+="<tr><td colspan='4' height='100px'><b>["+a.find("name").text()+"]</b><br>&nbsp;&nbsp;"+qcontent+"</td></tr>";
+				if(a.find("shopanswer").text()=="no"){
+					if(loginid=="admin"){
+					s+="<tr><td colspan='4'><button type='button' class='btn btn-primary addanswer'>답변달기</button>";
+					s+="<div class=answeradd style='display:none'><br><textarea class='writearea'></textarea><br>";
+					s+="<button type='button' value='"+a.find('idx').text()+"' class='btn btn-warning writeanswer'>작성</button></div></td></tr></table>";
+					}
+				}else{
+					var qanswer=a.find("shopanswer").text();
+					qanswer = qanswer.replace(/(?:\r\n|\r|\n)/g, '<br />');
+					s+="<tr class='info'><td colspan='4' height='80px;'><b>[샵주인]</b><br>&nbsp;&nbsp;"+qanswer+"</td></tr></table>";
 				}
 				
 			});
@@ -218,93 +271,96 @@ function answerlist(){
 	String []color=dto.getColor().split(":");		
 %>
 <body>
-<form id="frm">
-	<!-- hidden : 장바구니 db 에 넣어야할 값들 -->
-	<input type="hidden" name="shopnum" value="<%=shopnum%>">
-	<input type="hidden" name="num" value="<%=num%>">
-	<input type="hidden" name="mycolor" id="mycolor" 
-	value="<%=color[color.length-1]%>">
-	
-	<table style="width: 800px;">
-		<tr>
-			<td style="width: 500px;">
-				<div id="photo">
-					<img src="shopsave/<%=photo[0]%>"
-						class="large img-thumbnail">
-					<div>
-					<%
-					//사진이 여러개일경우만 반복문으로 처리
-					if(photo.length>1)
-					{
-						for(int i=0;i<photo.length;i++)
-						{%>
-							<img src="shopsave/<%=photo[i]%>"
-								class="small" >
-						<%}
-					}
-					%>	
-					</div>
-				</div>
-			</td>
-			<td style="width: 300px;" valign="top">
-				<h3>카테고리 : <%=dto.getCategory()%></h3>
-				<h3>상품명 : <%=dto.getSangpum()%></h3>
-				<%
-				NumberFormat nf=NumberFormat.getCurrencyInstance();
-				%>
-				<h3>가 격 : <%=nf.format(dto.getPrice())%></h3>
-				<h3>색 상 :
-				<%
-				for(String co:color)
-				{%>
-					<div class="colors" style="background-color: <%=co%>"></div>
-				<%}
-				%>
-				</h3>
-				<h3>선택한 색상 : 
-				 <div class="mycolor" style="background-color: <%=color[color.length-1]%>"></div>
-			    </h3>
-			    
-			    <!-- 갯수 선택 -->
-			    <h3>갯 수 : 
-			    	<input type="number" min="1" max="10" value="1"
-			    	step="1" name="cnt">
-			    </h3>
-			    
-			    <div style="margin-top: 100px;margin-left: 60px;">
-			    	<button type="button"
-			    	class="btn btn-success btn-lg"
-			    	style="width: 100px;"
-			    	id="btncart">장바구니</button>
-			    	
-			    	<button type="button"
-			    	class="btn btn-info btn-lg"
-			    	style="width: 100px;"
-			    	onclick="location.href='index.jsp?main=shop/shoplist.jsp'">상품목록</button>
-			    </div>
-			</td>
-		</tr>
-	</table>
-</form>
-
-<!-- detail 페이지의 댓글 -->
-<%
-	//댓글 입력창은 로그인을 해야만 보인다.
-	if(loginok!=null)
-	{
-%>
-<div id="answer">
-	<form id="answerfrm">
-		<input type="hidden" id="myid" value="<%=myid %>">
-		<input type="hidden" id="shopnum" value="<%=dto.getShopnum() %>">
+<div id="wrap">
+	<form id="frm">
+		<!-- hidden : 장바구니 db 에 넣어야할 값들 -->
+		<input type="hidden" name="shopnum" value="<%=shopnum%>">
+		<input type="hidden" name="num" value="<%=num%>">
+		<input type="hidden" name="mycolor" id="mycolor" 
+		value="<%=color[color.length-1]%>">
 		
-		<textarea id="content" class="form-control"></textarea>
-		<button type="button" id="addanswer" class="btn btn-warning">추가</button>
+		<table style="width: 800px;">
+			<tr>
+				<td style="width: 500px;">
+					<div id="photo">
+						<img src="shopsave/<%=photo[0]%>"
+							class="large img-thumbnail">
+						<div>
+						<%
+						//사진이 여러개일경우만 반복문으로 처리
+						if(photo.length>1)
+						{
+							for(int i=0;i<photo.length;i++)
+							{%>
+								<img src="shopsave/<%=photo[i]%>"
+									class="small" >
+							<%}
+						}
+						%>	
+						</div>
+					</div>
+				</td>
+				<td style="width: 300px;" valign="top">
+					<h3>카테고리 : <%=dto.getCategory()%></h3>
+					<h3>상품명 : <%=dto.getSangpum()%></h3>
+					<%
+					NumberFormat nf=NumberFormat.getCurrencyInstance();
+					%>
+					<h3>가 격 : <%=nf.format(dto.getPrice())%></h3>
+					<h3>색 상 :
+					<%
+					for(String co:color)
+					{%>
+						<div class="colors" style="background-color: <%=co%>"></div>
+					<%}
+					%>
+					</h3>
+					<h3>선택한 색상 : 
+					 <div class="mycolor" style="background-color: <%=color[color.length-1]%>"></div>
+				    </h3>
+				    
+				    <!-- 갯수 선택 -->
+				    <h3>갯 수 : 
+				    	<input type="number" min="1" max="10" value="1"
+				    	step="1" name="cnt">
+				    </h3>
+				    
+				    <div style="margin-top: 100px;margin-left: 60px;">
+				    	<button type="button"
+				    	class="btn btn-success btn-lg"
+				    	style="width: 100px;"
+				    	id="btncart">장바구니</button>
+				    	
+				    	<button type="button"
+				    	class="btn btn-info btn-lg"
+				    	style="width: 100px;"
+				    	onclick="location.href='index.jsp?main=shop/shoplist.jsp'">상품목록</button>
+				    </div>
+				</td>
+			</tr>
+		</table>
 	</form>
-</div>
-<%} %>
-<div id="answerlist">
 	
+	<!-- detail 페이지의 댓글 -->
+	<%
+		//댓글 입력창은 로그인을 해야만 보인다.
+		if(loginok!=null)
+		{
+	%>
+	<div id="answer">
+		<form id="answerfrm">
+			<input type="hidden" id="myid" value="<%=myid %>">
+			<input type="hidden" id="shopnum" value="<%=dto.getShopnum() %>">
+			<h5 style='font-weight:bold; font-size:1.5em;'>● 댓글달기</h5>
+			<textarea id="content" class="form-control"></textarea>
+			<button type="button" id="addanswer" class="btn btn-warning">추가</button>
+		</form>
+	</div>
+	<%} %>
+	<div id="answerlist">
+		
+	</div>
+
 </div>
 <script type="text/javascript">
 	$("#btncart").click(function(){

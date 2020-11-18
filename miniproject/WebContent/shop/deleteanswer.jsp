@@ -4,12 +4,6 @@
 
 <%
 	String idx=request.getParameter("idx");
-
-
 	ShopAnswerDao dao=new ShopAnswerDao();
-	
 	dao.deleteAnswer(idx);
-
-
-
 %>
