@@ -206,12 +206,16 @@ $(function(){
 	})
 	
 });
-
+<%
+	//로그인 상태
+	String loginok=(String)session.getAttribute("loginok");
+%>
 //사용자 함수 추가
 function answerlist(){
 	//alert($("#shopnum").val());
 	var loginid=$("#myid").val();
 	var shopnum=$("#shopnum").val();
+	var loginok="<%=loginok%>";
 	$.ajax({
 		data:"post",
 		dataType:"xml",
@@ -255,7 +259,7 @@ function answerlist(){
 <%
 	String shopnum=request.getParameter("shopnum");
 	//로그인상태
-	String loginok=(String)session.getAttribute("loginok");
+	loginok=(String)session.getAttribute("loginok");
 	//로그인한 아이디
 	String myid=(String)session.getAttribute("myid");
 	//아이디에 해당하는 멤버 테이블의 시퀀스번호
@@ -340,7 +344,9 @@ function answerlist(){
 			</tr>
 		</table>
 	</form>
-	
+	<input type="hidden" id="myid" value="<%=myid %>">
+	<input type="hidden" id="shopnum" value="<%=dto.getShopnum() %>">
+			
 	<!-- detail 페이지의 댓글 -->
 	<%
 		//댓글 입력창은 로그인을 해야만 보인다.
@@ -349,8 +355,6 @@ function answerlist(){
 	%>
 	<div id="answer">
 		<form id="answerfrm">
-			<input type="hidden" id="myid" value="<%=myid %>">
-			<input type="hidden" id="shopnum" value="<%=dto.getShopnum() %>">
 			<h5 style='font-weight:bold; font-size:1.5em;'>● 댓글달기</h5>
 			<textarea id="content" class="form-control"></textarea>
 			<button type="button" id="addanswer" class="btn btn-warning">추가</button>

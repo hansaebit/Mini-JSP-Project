@@ -12,6 +12,9 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Itim&family=Jua&display=swap" rel="stylesheet">
+
+
+
 <style type="text/css">
 	a{
 		color: black;
@@ -65,7 +68,7 @@
 	}
 	
 	div.layout div.main{
-		flex-basis: 1500px;
+		flex-basis: 1600px;
 		float:left;
 	}
 	

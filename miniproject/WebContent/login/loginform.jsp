@@ -27,7 +27,7 @@ $(function(){
 			alert("비밀번호를 입력해주세요");
 			return;
 		}
-		$("#frm").submit();
+		$("#loginfrm").submit();
 	});
 });
 </script>
@@ -43,7 +43,7 @@ $(function(){
 %>
 <body>
 <div class="loginform">
-	<form action="login/loginaction.jsp" method="post" id="frm">
+	<form action="login/loginaction.jsp" method="post" id="loginfrm">
 		<table class="table table-bordered">
 			<caption><b>세션로그인</b></caption>
 			<tr>

@@ -28,6 +28,10 @@
   		border:1px solid black;
   		margin-bottom:10px;
   	}
+  	.incon{
+  		
+  	}
+  	
   </style>
   
   <script>
@@ -71,7 +75,7 @@
 	
 	<div id="tabs-1">
 		<p>
-    		<table class="table table-bordered" style="width:700px;">
+    		<table class="table table-bordered incon" style="width:700px;">
     			<caption><b>전세 상품 목록</b></caption>
     			<tr>
     			<%
