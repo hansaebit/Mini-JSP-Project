@@ -25,7 +25,7 @@ public class MemberDao {
 		ResultSet rs = null;
 		String sql="select * from member where id=?";
 		
-		conn=db.getMyConnection();
+		conn=db.getGangsaConnection();
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -90,7 +90,7 @@ public class MemberDao {
 		String sql="insert into member values (seq_mini.nextval,?,?,?,?,?,?,?,sysdate)";
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		conn=db.getMyConnection();
+		conn=db.getGangsaConnection();
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -122,7 +122,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="select * from member order by id asc";
-		conn=db.getMyConnection();
+		conn=db.getGangsaConnection();
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -159,7 +159,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String sql="select * from member where num=?";
-		conn=db.getMyConnection();
+		conn=db.getGangsaConnection();
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -199,7 +199,7 @@ public class MemberDao {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		String sql="update member set name=?,hp=?,email=?,address=?,addrdetail=? where num=? ";
-		conn=db.getMyConnection();
+		conn=db.getGangsaConnection();
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -231,7 +231,7 @@ public class MemberDao {
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			String sql="select * from member where id=? and pass=?";
-			conn=db.getMyConnection();
+			conn=db.getGangsaConnection();
 			
 			try {
 				pstmt=conn.prepareStatement(sql);
@@ -260,7 +260,7 @@ public class MemberDao {
 			
 			String sql="delete from member where id=?";
 			
-			conn=db.getMyConnection();
+			conn=db.getGangsaConnection();
 			
 			try {
 				pstmt=conn.prepareStatement(sql);
@@ -304,7 +304,7 @@ public class MemberDao {
 			ResultSet rs = null;
 			String sql="select name from member where id=?";
 			
-			conn=db.getMyConnection();
+			conn=db.getGangsaConnection();
 			
 			try {
 				pstmt=conn.prepareStatement(sql);
@@ -334,7 +334,7 @@ public class MemberDao {
 			ResultSet rs=null;
 			String sql="select num from member where id=?";
 
-			conn=db.getMyConnection();
+			conn=db.getGangsaConnection();
 			try {
 				pstmt=conn.prepareStatement(sql);
 				//���ε�

@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class DbConnect {
 	// 필드
 	String driver = "oracle.jdbc.driver.OracleDriver"; // 퀀텀에서 우클릭 프로퍼티
-	String gangsa_url = "jdbc:oracle:thin:@192.168.0.12:1521:orcl";
+	String gangsa_url = "jdbc:oracle:thin:@192.168.0.10:1521:xe";
 	String my_url = "jdbc:oracle:thin:@localhost:1521:orcl";
 	String gangsa_id = "angel";
 	String my_id = "angel";

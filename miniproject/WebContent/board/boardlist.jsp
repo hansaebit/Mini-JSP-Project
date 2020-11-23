@@ -136,8 +136,20 @@
 										<img src="image/re.png">
 									<%
 								}
+								//원글이 없을 경우
+								boolean flag=db.isGroupStep(dto.getRegroup());
+								if(dto.getRestep()>0){
+									//원글이 없는 경우
+									if(!flag){
+										%>
+										<span style="color:red;">[원글이 없는 답글]</span>
+										<%
+									}
+								}
+								
 								%>
-								<a href="index.jsp?main=board/content.jsp?num=<%=dto.getNum() %>&pageNo=<%=currentPage%>&key=a">
+								
+								<a href="index.jsp?main=board/content.jsp?num=<%=dto.getNum() %>&pageNum=<%=currentPage%>&key=a">
 								<span style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display:inline-block;max-width: 350px;">
 								<%=dto.getSubject() %></span></a>
 							</td>

@@ -29,7 +29,7 @@
 	}
 	
 	
-	div.layout div.title{
+	div.title{
 		height: 130px;
 		line-height: 130px;
 		font-size: 60px;
@@ -37,14 +37,14 @@
 		font-family: Itim;
 	}
 	
-	div.layout div.menu{
+	div.menu{
 		text-align: center;
 		font-size: 30px;
 		font-family: Jua;
 
 	}
 	
-	div.layout div.info{
+	div.info{
 		width: 200px;
 		height: 200px;
 		border: 2px solid gray;
@@ -58,26 +58,24 @@
 		width:1600px;
 		margin:60px auto;
 		display:flex;
-		justify-content: space-between;
+		justify-content: center;
+		flex-wrap: nowrap;
 		
 	}
 	
-	div.layout .incontainer{
-		float:left;
-		flex-basis: 300px;
+	.incontainer{
+		flex-basis:300px;
 	}
 	
-	div.layout div.main{
-		flex-basis: 1600px;
-		float:left;
+	div.main{
+		flex-basis:1500px;
 	}
 	
-	div.layout div.nav{
-		float:left;
-		flex-basis: 360px;
+	div.nav{
+		flex-basis:300px;
 	}
 	
-	div.layout div.login{
+	div.login{
 		width: 200px;
 		/* height: 200px; */
 		border: 2px solid gray;
@@ -86,7 +84,7 @@
 		padding: 20px;
 		font-family: Jua;
 		margin-right: 60px;
-		margin-bottom: 400px;
+		margin-bottom: 500px;
 	}
 </style>
 
@@ -104,38 +102,36 @@
 	<%}
 %>
 <body>
-	<div class="layout">
 	
 	
-		<div class="title">
-			<jsp:include page="layout/title.jsp"/>
-		</div>
-		
-		<div class="menu">
-			<jsp:include page="layout/menu.jsp"/>
-		</div>
-		
-		
+	<div class="title">
+		<jsp:include page="layout/title.jsp"/>
+	</div>
+	
+	<div class="menu">
+		<jsp:include page="layout/menu.jsp"/>
+	</div>
+	
+	
 
-		<div class="container">
-			<div class="incontainer">
-				<div class="login ">
-					<jsp:include page="login/loginmain.jsp"/>
-				</div>
-				
-				<div class="info">
-					<jsp:include page="layout/info.jsp"/>
-				</div>
+	<div class="container">
+		<div class="incontainer">
+			<div class="login ">
+				<jsp:include page="login/loginmain.jsp"/>
 			</div>
-			<div class="main ">
-				<jsp:include page="<%=mainPage %>"/>
-			</div>
-			<div class='nav'>
+			
+			<div class="info">
+				<jsp:include page="layout/info.jsp"/>
 			</div>
 		</div>
+		<div class="main ">
+			<jsp:include page="<%=mainPage %>"/>
+		</div>
+		<div class='nav'>
+			&nbsp;
+		</div>
+	</div>
 
-
-</div>
 
 	
 </body>

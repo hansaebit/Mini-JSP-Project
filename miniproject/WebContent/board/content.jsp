@@ -13,7 +13,6 @@
 	#wrap{
 		display:flex;
 		justify-content:center;
-		font-family: Single Day;
 	}
 	
 </style>
@@ -63,11 +62,16 @@ SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		 			<div style="float:right;">
 		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/writeform.jsp'" style="width:80px;">새글</button>
 		 			
-		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/boardlist.jsp?pageNum=<%=pageNum %>'" style="width:80px;">목록</button>
+		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/boardlist.jsp?pageNum=<%=pageNum%>'" style="width:80px;">목록</button>
 		 			
 		 			<!-- regroup relevel restep num pagenum -->
 		 			
 		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/writeform.jsp?num=<%=num%>&regroup=<%=dto.getRegroup()%>&relevel=<%=dto.getRelevel()%>&restep=<%=dto.getRestep()%>&pageNum=<%=pageNum%>'" style="width:80px;">답글</button>
+		 			
+		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/updatepassform.jsp?num=<%=num%>&pageNum=<%=pageNum%>'" style="width:80px;"><span class="glyphicon glyphicon-edit"></span>&nbsp;수정</button>
+		 			
+		 			<button type="button" class="btn btn-primary btn-sm" onclick="location.href='index.jsp?main=board/deletepassform.jsp?num=<%=num%>&pageNum=<%=pageNum%>'" style="width:80px;">&nbsp;삭제</button>
+		 			
 		 			</div>
 		 		</td>
 		 	</tr>

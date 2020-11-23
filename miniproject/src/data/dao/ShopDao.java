@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import data.dto.BoardDto;
 import data.dto.CartDto;
 import data.dto.ShopDto;
+import mysql.db.MysqlConnect;
 import oracle.db.DbConnect;
 
 public class ShopDao {
 	DbConnect db=new DbConnect();
+	MysqlConnect mdb=new MysqlConnect();
 	
 	//insert
 	public void insertShop(ShopDto dto) {
@@ -193,5 +196,71 @@ public class ShopDao {
 		}finally {
 			db.dbClose(conn, pstmt);
 		}
+	}
+	
+	
+	public List<ShopDto> getNewSangpums(){
+		List<ShopDto> list=new ArrayList<ShopDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		//최신 상품 4개 가져오기.
+		String sql="select a.* from (select ROWNUM as RNUM,b.* from(select * from shop order by shopnum desc)b)a where a.RNUM>=1 and a.RNUM<=4";
+		conn=db.getMyConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				ShopDto dto=new ShopDto();
+				dto.setCategory(rs.getString("category"));
+				dto.setColor(rs.getString("color"));
+				dto.setIpgoday(rs.getString("ipgoday"));
+				dto.setPhoto(rs.getString("photo"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setSangpum(rs.getString("sangpum"));
+				dto.setShopnum(rs.getString("shopnum"));	
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt, rs);
+		}
+		return list;
+	}
+	
+	public List<BoardDto> getNewBoard(){ //시작, 몇개씩 볼지 (mysql)
+		//그룹변수의 내림차순, 같은 그룹인 경우 step의 오름차순 출력.
+		//limit으로 시작번지와 몇개를 가져올지 바인딩.
+		String sql="select * from board where relevel=0 order by regroup desc, restep asc limit 0,10 ";
+		List<BoardDto> list=new ArrayList<BoardDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		conn=mdb.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				BoardDto dto=new BoardDto();
+				dto.setNum(rs.getString("num"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setContent(rs.getString("content"));
+				dto.setRegroup(rs.getInt("regroup"));
+				dto.setRelevel(rs.getInt("relevel"));
+				dto.setRestep(rs.getInt("restep"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setWriteday(rs.getTimestamp("writeday"));
+				//list에 추가
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt, rs);
+		}
+		return list;
 	}
 }

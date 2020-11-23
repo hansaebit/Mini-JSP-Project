@@ -210,4 +210,95 @@ public class BoardDao {
 		return tot;
 	}
 	
+	//비번이 맞지 않을 경우 true 반환
+	public boolean isEqualPass(String num,String pass) {
+		boolean flag=false;
+		String sql="select count(*) from board where num=? and pass=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			pstmt.setString(2, pass);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+				if(rs.getInt(1)==1)//비번이 맞으면 1, 틀리면 0(count)
+				flag=true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+		return flag;
+	}
+	
+	//수정
+	public void updateBoard(BoardDto dto) {
+		String sql="update board set writer=?,subject=?,content=? where num=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			//바인딩
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getSubject());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setString(4, dto.getNum());
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+		
+	}
+	
+	//삭제
+	public void deleteBoard(String num) {
+		String sql="delete from board where num=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			//바인딩
+			pstmt.setString(1, num);
+			
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+	}
+	//원글이 있는지 검사 - 있을 경우 true
+	public boolean isGroupStep(int regroup) {
+		boolean flag=false;
+		String sql="select * from board regroup=? and restep=0";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, regroup);
+			rs=pstmt.executeQuery();
+			//데이터가 있을 경우 true
+			if(rs.next())
+				flag=true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+		return flag;
+	}
+	
 }

@@ -102,6 +102,9 @@
 			<a href="<%=url %>/index.jsp?main=board/boardlist.jsp">게시판</a>
 		</li>
 		<li menu="menu6">
+			<a href="<%=url %>/index.jsp?main=databoard/databoardlist.jsp">자료실</a>
+		</li>
+		<li menu="menu7">
 			<a href="<%=url %>/index.jsp?main=money/moneylist.jsp">금전출납부</a>
 		</li>
 	</ul>

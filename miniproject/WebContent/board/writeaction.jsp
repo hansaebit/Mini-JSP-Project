@@ -8,6 +8,8 @@ request.setCharacterEncoding("utf-8");
 <jsp:useBean id="dto" class="data.dto.BoardDto"/>
 <jsp:setProperty property="*" name="dto"/>
 <%
+String subject=dto.getSubject().replace("<","&lt;").replace(">","&gt;");
+dto.setSubject(subject);
 //insert
 dao.insertBoard(dto);
 //insert된 num값 얻기
