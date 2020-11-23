@@ -109,6 +109,7 @@ public class DataBoardDao {
 				dto.setFiles(rs.getString("files"));
 				dto.setContent(rs.getString("content"));
 				dto.setWriteday(rs.getTimestamp("writeday"));
+				dto.setReadcount(rs.getInt("readcount"));
 			
 				list.add(dto);
 			}
@@ -120,4 +121,53 @@ public class DataBoardDao {
 		}
 		return list;
 	}
+	
+	public void updateReadCount(String num) {
+		String sql="update databoard set readcount=readcount+1 where num=?";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+	}
+	
+	//dto 반환
+	public DataBoardDto getData(String num) {
+		DataBoardDto dto=new DataBoardDto();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select * from databoard where num=?";
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				dto.setNum(rs.getString("num"));
+				dto.setMyid(rs.getString("myid"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setFiles(rs.getString("files"));
+				dto.setContent(rs.getString("content"));
+				dto.setWriteday(rs.getTimestamp("writeday"));
+				dto.setReadcount(rs.getInt("readcount"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt, rs);
+		}
+		return dto;
+	}
+	
+	
 }

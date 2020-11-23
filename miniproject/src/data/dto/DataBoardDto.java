@@ -1,5 +1,6 @@
 package data.dto;
 
+import java.io.File;
 import java.sql.Timestamp;
 
 public class DataBoardDto {
@@ -77,23 +78,30 @@ public class DataBoardDto {
 	public boolean isFileInGeneral() {
 		boolean b=false;
 		String ext= "jpg,png,jpeg,gif";
-		if(this.getFiles()!=null) {
-			String[] files=this.getFiles().split(",");
+		String[] files=this.getFiles().split(",");
 			
-			for(String file:files) {
-				//확장자 얻기
-				int dot=file.indexOf(".");//.의 번지 찾기
-				String fileExt=file.substring(dot+1);//도트 다음번지부터 끝까지 추출.
-				//파일 확장자 ext안에 있는지 확인
-				//이미지 파일이 있을경우 true, 반대로 이미지가 아닐경우 false(이미지파일이 아닌 다른 파일존재).
-				boolean find=ext.contains(fileExt.toLowerCase());
-				if(!find) {
-					b=true;
-					break;
-				}
+		for(String file:files) {
+			//확장자 얻기
+			int dot=file.indexOf(".");//.의 번지 찾기
+			String fileExt=file.substring(dot+1);//도트 다음번지부터 끝까지 추출.
+			//파일 확장자 ext안에 있는지 확인
+			//이미지 파일이 있을경우 true, 반대로 이미지가 아닐경우 false(이미지파일이 아닌 다른 파일존재).
+			boolean find=ext.contains(fileExt.toLowerCase());
+			if(!find) {
+				b=true;
+				break;
 			}
 		}
 		
+		
 		return b;
+	}
+	
+	//해당 path에 파일이 존재하면 true리턴
+	public boolean isFile(String path,String fileName) {
+		boolean flag=false;
+		File file=new File(path+"\\"+fileName);
+		flag=file.exists(); //준재하면 true, 존재하지 않으면 false를 반환하는 메서드.
+		return flag;
 	}
 }

@@ -107,7 +107,7 @@
 				<tr align="center">
 					<td><%=no-- %></td>
 					<td align="left">
-						<a href="index.jsp?main=databoard/content.jsp?num=<%=dto.getNum() %>&pageNum=<%=currentPage %>&key=a">
+						<a href="index.jsp?main=databoard/content.jsp?num=<%=dto.getNum()%>&pageNum=<%=currentPage %>&key=a">
 							<%String listsubject=dto.getSubject(); 
 							/* listsubject=listsubject.replace("<", "%<") */%>
 							<%=listsubject %>

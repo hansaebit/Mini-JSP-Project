@@ -15,7 +15,11 @@
 		multi=new MultipartRequest(request,savePath,uploadSize,"utf-8",new DefaultFileRenamePolicy());
 		String myid=multi.getParameter("myid");
 		String subject=multi.getParameter("subject");
+		//html 태그 입력시 텍스트로 보이게 하기
+		subject=subject.replace("<","&lt;").replace(">","&gt;");
 		String content=multi.getParameter("content");
+		//html 태그 입력시 텍스트로 보이게 하기
+		content=content.replace("<","&lt;").replace(">","&gt;");
 		String files="";
 		//파일은 파일타입의 name들을 먼저 얻은 후 반복하여 파일명을 얻는다.
 		Enumeration en=multi.getFileNames();
