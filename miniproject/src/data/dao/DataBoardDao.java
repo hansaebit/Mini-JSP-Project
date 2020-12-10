@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.dto.DataAnswerDto;
 import data.dto.DataBoardDto;
 import data.dto.GuestDto;
 import oracle.db.DbConnect;
@@ -167,6 +168,58 @@ public class DataBoardDao {
 			db.dbClose(conn, pstmt, rs);
 		}
 		return dto;
+	}
+	
+	//insert
+	public void insertAnswer(DataAnswerDto dto) {
+		String sql="insert into dataanswer values (seq_mini.nextval,?,?,?,sysdate)";
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		conn=db.getGangsaConnection();
+
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getNum());
+			pstmt.setString(2, dto.getNickname());
+			pstmt.setString(3, dto.getAcontent());
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt);
+		}
+	}
+	
+	//dto 반환
+	public List<DataAnswerDto> getAnswerList(String num) {
+		List<DataAnswerDto> list= new ArrayList<DataAnswerDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select * from dataanswer where num=? order by idx desc";
+		conn=db.getGangsaConnection();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, num);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				DataAnswerDto dto=new DataAnswerDto();
+				dto.setNum(rs.getString("num"));
+				dto.setIdx(rs.getString("idx"));
+				dto.setNickname(rs.getString("nickname"));
+				dto.setAcontent(rs.getString("acontent"));
+				dto.setWriteday(rs.getTimestamp("writeday"));
+				
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(conn, pstmt, rs);
+		}
+		return list;
 	}
 	
 	

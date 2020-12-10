@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="data.dto.DataAnswerDto"%>
 <%@page import="data.dao.MemberDao"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="data.dto.DataBoardDto"%>
@@ -16,6 +19,16 @@
 		line-height: 70px;
 		border: 1px solid gray;
 		border-radius: 10px;
+	}
+	
+	.datacontent{
+		dispaly:flex;
+	}
+	
+	div.dataanswerlist{
+		margin-top:10px;
+		margin-left:20px;
+		
 	}
 </style>
 </head>
@@ -99,7 +112,47 @@
 				%>
 			</td>
 		</tr>
-		</table>
+		<tr>
+			<td>
+				<div class="dataanswerform">
+					<form action="databoard/answeraction.jsp" method="post">
+						<input type="hidden" name="num" value="<%=num%>">
+						<input type="hidden" name="pageNum" value="<%=pageNum%>">
+						<input type="text" name="nickname" style="width:100px;" placeholder="닉네임">
+						<input type="text" name="acontent" style="width:300px;" placeholder="댓글입력">
+						<button type="submit" class="btn btn-danger btn-sm">추가</button>
+					</form>
+				</div>
+				<div class="dataanswerlist">
+					<a id="dataanswerlist">
+						<!-- 닉네임 : 내용 날짜순으로 출력 -->
+						<%
+						List<DataAnswerDto> list=new ArrayList<DataAnswerDto>();
+						list=dao.getAnswerList(num);
+						for(DataAnswerDto dadto:list){
+							%>
+							
+								<%=dadto.getNickname() %> :<%=dadto.getAcontent() %>
+								<span style="color:gray;">
+									<%=sdf.format(dadto.getWriteday()) %>
+								</span>
+								<br>
+							<%
+						}
+						
+						%>
+					</a>
+				</div>
+				<div class="databutton">
+					<button type="button" class="btn btn-info btn-sm" onclick="location.href='index.jsp?main=databoard/databoardform.jsp'"
+					style="width:120px;">글쓰기</button>
+					
+					<button type="button" class="btn btn-info btn-sm" onclick="location.href='index.jsp?main=databoard/databoardlist.jsp?pageNum=<%=pageNum %>'"
+					style="width:120px;">글목록</button>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>

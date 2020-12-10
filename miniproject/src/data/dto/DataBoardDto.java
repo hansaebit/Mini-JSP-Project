@@ -3,6 +3,8 @@ package data.dto;
 import java.io.File;
 import java.sql.Timestamp;
 
+import data.dao.DataBoardDao;
+
 public class DataBoardDto {
 	private String num;
 	private String myid;
@@ -103,5 +105,11 @@ public class DataBoardDto {
 		File file=new File(path+"\\"+fileName);
 		flag=file.exists(); //준재하면 true, 존재하지 않으면 false를 반환하는 메서드.
 		return flag;
+	}
+	
+	
+	public int getAnswerCount() {
+		DataBoardDao dao=new DataBoardDao();
+		return dao.getAnswerList(num).size();
 	}
 }

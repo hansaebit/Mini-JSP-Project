@@ -120,6 +120,21 @@
 								<%}
 							}%>
 						</a>
+						<!-- 댓글 갯수 출력하기 -->
+						<%if(dto.getAnswerCount()>0){
+							%>
+								<span style="color:red;">
+								[
+									<a style="color:red;"
+									 href="index.jsp?main=databoard/content.jsp?num=<%=dto.getNum()%>&pageNum=<%=currentPage %>#dataanswerlist">
+										<%=dto.getAnswerCount() %>
+									</a>
+								]
+								</span>
+							<%
+						}%>
+					
+						
 					</td>
 					<td>
 						<%=name %>

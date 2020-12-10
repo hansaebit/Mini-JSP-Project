@@ -66,6 +66,8 @@ $(function(){
 				<td colspan="2">
 					<input type="checkbox" name="saveid"
 					 <%=saveid==null?"":"checked"%>>아이디저장
+					 
+					 
 					&nbsp;&nbsp;&nbsp;
 					<a href="index.jsp?main=member/memberform.jsp">
 					회원가입</a>

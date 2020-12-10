@@ -47,6 +47,7 @@
 	String name=dao.getName(id);
 %>
 <body>
+
 <b><%=name%> 님</b> 
 <div class="cart">
 <%
